@@ -1,0 +1,53 @@
+This file works with vscode REST Client https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+### login authorized, get access token
+POST http://localhost:3000/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "user@domain.com",
+    "password": "12345678"
+}
+
+###################################################################
+###################################################################
+###################################################################
+
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoidXNlckBkb21haW4uY29tIiwiaWF0IjoxNzQyODUxMTgyLCJleHAiOjE3NDI4NTE0ODJ9.42FRL1thQKA6IHgVHf0iypNymq7_Cxx9kWosyanKSN4
+
+### create user
+POST http://localhost:3000/users HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "email": "user@domain.com",
+    "password": "12345678"
+}
+
+### get all users
+GET http://localhost:3000/users
+
+### search user by id
+GET http://localhost:3000/users/1
+
+### search user by part of email
+GET http://localhost:3000/users/search?email=domain.com
+
+###################################################################
+###################################################################
+###################################################################
+
+### get all managers
+GET http://localhost:3000/managers
+
+### create manager
+POST http://localhost:3000/managers HTTP/1.1
+content-type: application/json
+
+{
+    "email": "manager_john@domain.com",
+    "password": "12345678",
+    "firstName": "John",
+    "lastName": "Doe"
+}

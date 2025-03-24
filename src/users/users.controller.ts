@@ -6,12 +6,13 @@ import {
   Param,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { mapToNewUser, mapToUserDto } from './mappers/user.dto.mapper';
 import { UserDto } from './dto/user.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('/users')
 export class UsersController {
@@ -47,6 +48,7 @@ export class UsersController {
     return mapToUserDto(user);
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   public async createUser(
     @Body() newUserDto: CreateUserDto,
