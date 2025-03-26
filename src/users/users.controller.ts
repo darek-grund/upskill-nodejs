@@ -12,7 +12,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { mapToNewUser, mapToUserDto } from './mappers/user.dto.mapper';
 import { UserDto } from './dto/user.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('/users')
 export class UsersController {
