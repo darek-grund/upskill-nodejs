@@ -13,9 +13,13 @@ export const mapToNewManager = (
   user,
 });
 
-export const mapToManagerDto = (manager: Manager): ManagerDto => ({
-  id: manager.id,
-  email: manager.user.email,
-  firstName: manager.firstName,
-  lastName: manager.lastName,
-});
+export const mapToManagerDto = (manager: Manager): ManagerDto => {
+  console.log('manager', manager);
+  return {
+    id: manager.id,
+    email: manager.user.email,
+    firstName: manager.firstName,
+    lastName: manager.lastName,
+  }
+};
+

@@ -18,7 +18,7 @@ export class Manager {
   @Column({ length: 50 })
   lastName: string;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, user => user.manager)
   @JoinColumn()
   user: User;
 }
