@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, Like } from 'typeorm';
+import { Repository, Like, QueryRunner } from 'typeorm';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUser } from './model/create-user';
@@ -29,7 +29,10 @@ export class UsersService {
     });
   }
 
-  public async create(user: CreateUser): Promise<User> {
+  public async create(user: CreateUser, queryRunner?: QueryRunner): Promise<User> {
+    if (queryRunner) {
+      return queryRunner.manager.save(User, user);
+    }
     return this.userRepository.save(user);
   }
 }

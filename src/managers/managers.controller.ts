@@ -5,12 +5,16 @@ import { mapToNewManager, mapToManagerDto } from './mappers/manager.dto.mapper';
 import { ManagerDto } from './dto/manager.dto';
 import { UsersService } from 'src/users/users.service';
 import { mapToNewUser } from 'src/users/mappers/user.dto.mapper';
+import { DataSource } from 'typeorm';
+import { InjectDataSource } from '@nestjs/typeorm';
 
 @Controller('/managers')
 export class ManagersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly managersService: ManagersService,
+    @InjectDataSource()
+    private readonly dataSource: DataSource,
   ) {}
 
   @Get()
@@ -23,12 +27,24 @@ export class ManagersController {
   public async createManager(
     @Body() newManagerDto: CreateManagerDto,
   ): Promise<ManagerDto | null> {
-    const newUser = mapToNewUser(newManagerDto);
-    const user = await this.usersService.create(newUser);
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
 
-    const newManager = mapToNewManager(newManagerDto, user);
-    const manager = await this.managersService.create(newManager);
+    try {
+      const newUser = mapToNewUser(newManagerDto);
+      const user = await this.usersService.create(newUser, queryRunner);
 
-    return mapToManagerDto(manager);
+      const newManager = mapToNewManager(newManagerDto, user);
+      const manager = await this.managersService.create(newManager, queryRunner);
+
+      await queryRunner.commitTransaction();
+      return mapToManagerDto(manager);
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
   }
 }

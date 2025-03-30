@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, QueryRunner } from 'typeorm';
 import { Manager } from './entities/manager.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateManager } from './model/create-manager';
@@ -21,7 +21,10 @@ export class ManagersService {
     });
   }
 
-  public async create(manager: CreateManager): Promise<Manager> {
+  public async create(manager: CreateManager, queryRunner?: QueryRunner): Promise<Manager> {
+    if (queryRunner) {
+      return queryRunner.manager.save(Manager, manager);
+    }
     return this.managerRepository.save(manager);
   }
 }
