@@ -21,7 +21,10 @@ export class ManagersService {
     });
   }
 
-  public async create(manager: CreateManager, queryRunner?: QueryRunner): Promise<Manager> {
+  public async create(
+    manager: CreateManager,
+    queryRunner?: QueryRunner,
+  ): Promise<Manager> {
     if (queryRunner) {
       return queryRunner.manager.save(Manager, manager);
     }

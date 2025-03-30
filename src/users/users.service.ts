@@ -29,7 +29,10 @@ export class UsersService {
     });
   }
 
-  public async create(user: CreateUser, queryRunner?: QueryRunner): Promise<User> {
+  public async create(
+    user: CreateUser,
+    queryRunner?: QueryRunner,
+  ): Promise<User> {
     if (queryRunner) {
       return queryRunner.manager.save(User, user);
     }

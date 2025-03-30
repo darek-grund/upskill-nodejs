@@ -6,6 +6,11 @@ import { AuthModule } from './auth/auth.module';
 import databaseConfig from './common/config/database/database.config';
 
 @Module({
-  imports: [UsersModule, ManagersModule, TypeOrmModule.forRoot(databaseConfig), AuthModule],
+  imports: [
+    UsersModule,
+    ManagersModule,
+    TypeOrmModule.forRoot(databaseConfig),
+    AuthModule,
+  ],
 })
 export class AppModule {}

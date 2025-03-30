@@ -1,7 +1,5 @@
-import { Exclude } from 'class-transformer';
-import { IsEmpty, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
+import { IsNotEmpty, MaxLength } from 'class-validator';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { User } from 'src/users/entities/user.entity';
 
 export class CreateManagerDto extends CreateUserDto {
   @MaxLength(50)

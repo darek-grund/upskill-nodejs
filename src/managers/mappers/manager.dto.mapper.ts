@@ -3,7 +3,6 @@ import { Manager } from '../entities/manager.entity';
 import { CreateManager } from '../model/create-manager';
 import { ManagerDto } from '../dto/manager.dto';
 import { User } from 'src/users/entities/user.entity';
-import { first } from 'rxjs';
 
 export const mapToNewManager = (
   newManagerDto: CreateManagerDto,

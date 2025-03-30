@@ -36,7 +36,10 @@ export class ManagersController {
       const user = await this.usersService.create(newUser, queryRunner);
 
       const newManager = mapToNewManager(newManagerDto, user);
-      const manager = await this.managersService.create(newManager, queryRunner);
+      const manager = await this.managersService.create(
+        newManager,
+        queryRunner,
+      );
 
       await queryRunner.commitTransaction();
       return mapToManagerDto(manager);
