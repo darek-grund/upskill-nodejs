@@ -51,13 +51,18 @@ describe('AuthService', () => {
     const mockToken = 'mock.jwt.token';
 
     it('should return access token when credentials are valid', async () => {
+      // Arrange
       mockUsersService.findOneByEmail.mockResolvedValue(mockUser);
       mockJwtService.signAsync.mockResolvedValue(mockToken);
 
+      // Act
       const result = await service.signIn(mockUser.email, mockUser.password);
 
+      // Assert
       expect(result).toEqual({ access_token: mockToken });
-      expect(mockUsersService.findOneByEmail).toHaveBeenCalledWith(mockUser.email);
+      expect(mockUsersService.findOneByEmail).toHaveBeenCalledWith(
+        mockUser.email,
+      );
       expect(mockJwtService.signAsync).toHaveBeenCalledWith({
         sub: mockUser.id,
         username: mockUser.email,
@@ -65,19 +70,28 @@ describe('AuthService', () => {
     });
 
     it('should throw UnauthorizedException when password is incorrect', async () => {
+      // Arrange
       mockUsersService.findOneByEmail.mockResolvedValue(mockUser);
 
-      await expect(
-        service.signIn(mockUser.email, 'wrongPassword'),
-      ).rejects.toThrow(UnauthorizedException);
+      // Act
+      const signInPromise = service.signIn(mockUser.email, 'wrongPassword');
+
+      // Assert
+      await expect(signInPromise).rejects.toThrow(UnauthorizedException);
     });
 
     it('should throw UnauthorizedException when user does not exist', async () => {
+      // Arrange
       mockUsersService.findOneByEmail.mockResolvedValue(null);
 
-      await expect(
-        service.signIn('nonexistent@example.com', 'anyPassword'),
-      ).rejects.toThrow(UnauthorizedException);
+      // Act
+      const signInPromise = service.signIn(
+        'nonexistent@example.com',
+        'anyPassword',
+      );
+
+      // Assert
+      await expect(signInPromise).rejects.toThrow(UnauthorizedException);
     });
   });
-}); 
+});

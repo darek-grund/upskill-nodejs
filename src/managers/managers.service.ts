@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository, QueryRunner } from 'typeorm';
 import { Manager } from './entities/manager.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,44 +12,24 @@ export class ManagersService {
   ) {}
 
   public async findAll(): Promise<Manager[]> {
-    try {
-      return await this.managerRepository.find({
-        relations: ['user']
-      });
-    } catch (error) {
-      throw new InternalServerErrorException('Error fetching managers');
-    }
+    return await this.managerRepository.find({
+      relations: ['user'],
+    });
   }
 
   public async findOneById(id: number): Promise<Manager | null> {
-    if (!id || id <= 0) {
-      throw new BadRequestException('Invalid manager ID');
-    }
-
-    try {
-      return await this.managerRepository.findOneBy({
-        id,
-      });
-    } catch (error) {
-      throw new InternalServerErrorException('Error fetching manager');
-    }
+    return await this.managerRepository.findOneBy({
+      id,
+    });
   }
 
   public async create(
     manager: CreateManager,
     queryRunner?: QueryRunner,
   ): Promise<Manager> {
-    if (!manager.firstName || !manager.lastName) {
-      throw new BadRequestException('Invalid manager data');
+    if (queryRunner) {
+      return await queryRunner.manager.save(Manager, manager);
     }
-
-    try {
-      if (queryRunner) {
-        return await queryRunner.manager.save(Manager, manager);
-      }
-      return await this.managerRepository.save(manager);
-    } catch (error) {
-      throw new InternalServerErrorException('Error creating manager');
-    }
+    return await this.managerRepository.save(manager);
   }
 }

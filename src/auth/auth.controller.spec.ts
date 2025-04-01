@@ -32,6 +32,7 @@ describe('AuthController', () => {
 
   describe('signIn', () => {
     it('should call authService.signIn with correct parameters', async () => {
+      // Arrange
       const signInDto: SignInDto = {
         email: 'test@example.com',
         password: 'password123',
@@ -43,8 +44,10 @@ describe('AuthController', () => {
 
       mockAuthService.signIn.mockResolvedValue(expectedResponse);
 
+      // Act
       const result = await controller.signIn(signInDto);
 
+      // Assert
       expect(authService.signIn).toHaveBeenCalledWith(
         signInDto.email,
         signInDto.password,
@@ -52,4 +55,4 @@ describe('AuthController', () => {
       expect(result).toEqual(expectedResponse);
     });
   });
-}); 
+});

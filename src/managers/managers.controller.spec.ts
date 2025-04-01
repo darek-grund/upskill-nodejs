@@ -3,7 +3,6 @@ import { ManagersController } from './managers.controller';
 import { ManagersService } from './managers.service';
 import { UsersService } from 'src/users/users.service';
 import { CreateManagerDto } from './dto/create-manager.dto';
-import { ManagerDto } from './dto/manager.dto';
 import { DataSource, QueryRunner } from 'typeorm';
 
 describe('ManagersController', () => {
@@ -66,41 +65,44 @@ describe('ManagersController', () => {
 
   describe('getAllManagers', () => {
     it('should return all managers', async () => {
+      // Arrange
       const mockManagers = [
         {
           id: 1,
           firstName: 'John',
           lastName: 'Doe',
           user: {
-            email: 'john@example.com'
-          }
+            email: 'john@example.com',
+          },
         },
         {
           id: 2,
           firstName: 'Jane',
           lastName: 'Smith',
           user: {
-            email: 'jane@example.com'
-          }
+            email: 'jane@example.com',
+          },
         },
       ];
       mockManagersService.findAll.mockResolvedValue(mockManagers);
 
+      // Act
       const result = await controller.getAllManagers();
 
+      // Assert
       expect(result).toEqual([
         {
           id: 1,
           email: 'john@example.com',
           firstName: 'John',
-          lastName: 'Doe'
+          lastName: 'Doe',
         },
         {
           id: 2,
           email: 'jane@example.com',
           firstName: 'Jane',
-          lastName: 'Smith'
-        }
+          lastName: 'Smith',
+        },
       ]);
       expect(mockManagersService.findAll).toHaveBeenCalledTimes(1);
     });
@@ -127,16 +129,19 @@ describe('ManagersController', () => {
     };
 
     it('should create a new manager successfully', async () => {
+      // Arrange
       mockUsersService.create.mockResolvedValue(mockUser);
       mockManagersService.create.mockResolvedValue(mockManager);
 
+      // Act
       const result = await controller.createManager(mockCreateManagerDto);
 
+      // Assert
       expect(result).toEqual({
         id: 1,
         email: 'manager@example.com',
         firstName: 'New',
-        lastName: 'Manager'
+        lastName: 'Manager',
       });
       expect(mockQueryRunner.connect).toHaveBeenCalled();
       expect(mockQueryRunner.startTransaction).toHaveBeenCalled();
@@ -147,11 +152,17 @@ describe('ManagersController', () => {
     });
 
     it('should rollback transaction on error', async () => {
+      // Arrange
       mockUsersService.create.mockRejectedValue(new Error('Database error'));
 
-      await expect(controller.createManager(mockCreateManagerDto)).rejects.toThrow('Database error');
+      // Act
+      await expect(
+        controller.createManager(mockCreateManagerDto),
+      ).rejects.toThrow('Database error');
+
+      // Assert
       expect(mockQueryRunner.rollbackTransaction).toHaveBeenCalled();
       expect(mockQueryRunner.release).toHaveBeenCalled();
     });
   });
-}); 
+});

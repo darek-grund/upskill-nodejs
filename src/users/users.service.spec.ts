@@ -115,4 +115,4 @@ describe('UsersService', () => {
       expect(repository.save).toHaveBeenCalledWith(createUserDto);
     });
   });
-}); 
+});
