@@ -7,9 +7,6 @@ import { DataSource, QueryRunner } from 'typeorm';
 
 describe('ManagersController', () => {
   let controller: ManagersController;
-  let managersService: ManagersService;
-  let usersService: UsersService;
-  let dataSource: DataSource;
 
   const mockManagersService = {
     findAll: jest.fn(),
@@ -52,9 +49,6 @@ describe('ManagersController', () => {
     }).compile();
 
     controller = module.get<ManagersController>(ManagersController);
-    managersService = module.get<ManagersService>(ManagersService);
-    usersService = module.get<UsersService>(UsersService);
-    dataSource = module.get<DataSource>(DataSource);
 
     mockDataSource.createQueryRunner.mockReturnValue(mockQueryRunner);
   });
@@ -114,6 +108,8 @@ describe('ManagersController', () => {
       lastName: 'Manager',
       email: 'manager@example.com',
       password: 'password123',
+      notifyByEmail: true,
+      notifyByPhone: true,
     };
 
     const mockUser = {

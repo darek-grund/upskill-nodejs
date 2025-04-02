@@ -13,8 +13,7 @@ content-type: application/json
 ###################################################################
 ###################################################################
 
-@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoidXNlckBkb21haW4uY29tIiwiaWF0IjoxNzQyODUxMTgyLCJleHAiOjE3NDI4NTE0ODJ9.42FRL1thQKA6IHgVHf0iypNymq7_Cxx9kWosyanKSN4
-
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoidXNlckBkb21haW4uY29tIiwiaWF0IjoxNzQ0NDg3NzMzLCJleHAiOjE3NDQ0ODgwMzN9.i8gyCVTHQWFHOs2Aj90VSOApZWmA1HCUFjYXjc5JgQU
 ### create user
 POST http://localhost:3000/users HTTP/1.1
 content-type: application/json
@@ -22,7 +21,10 @@ Authorization: Bearer {{access_token}}
 
 {
     "email": "user@domain.com",
-    "password": "12345678"
+    "password": "12345678",
+    "phone": "+48 123 123 123",
+    "notifyByEmail": true,
+    "notifyByPhone": true
 }
 
 ### get all users

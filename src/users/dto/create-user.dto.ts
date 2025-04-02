@@ -1,4 +1,12 @@
-import { IsEmail, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsPhoneNumber,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class CreateUserDto {
   @IsEmail()
@@ -9,4 +17,14 @@ export class CreateUserDto {
   @MaxLength(50)
   @IsNotEmpty()
   password: string;
+
+  @IsPhoneNumber()
+  @IsOptional()
+  phone?: string;
+
+  @IsBoolean()
+  notifyByEmail: boolean;
+
+  @IsBoolean()
+  notifyByPhone: boolean;
 }

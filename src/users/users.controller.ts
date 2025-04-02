@@ -16,8 +16,6 @@ import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('/users')
 export class UsersController {
-  private readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   constructor(private readonly usersService: UsersService) {}
 
   @Get()

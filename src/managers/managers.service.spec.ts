@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository, QueryRunner, EntityManager } from 'typeorm';
+import { QueryRunner, EntityManager } from 'typeorm';
 import { ManagersService } from './managers.service';
 import { Manager } from './entities/manager.entity';
 import { CreateManager } from './model/create-manager';
@@ -8,7 +8,6 @@ import { User } from '../users/entities/user.entity';
 
 describe('ManagersService', () => {
   let service: ManagersService;
-  let repository: Repository<Manager>;
 
   const mockRepository = {
     find: jest.fn(),
@@ -47,7 +46,6 @@ describe('ManagersService', () => {
     }).compile();
 
     service = module.get<ManagersService>(ManagersService);
-    repository = module.get<Repository<Manager>>(getRepositoryToken(Manager));
   });
 
   afterEach(() => {

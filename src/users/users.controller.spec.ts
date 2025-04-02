@@ -9,7 +9,6 @@ import { Manager } from '../managers/entities/manager.entity';
 
 describe('UsersController', () => {
   let controller: UsersController;
-  let usersService: UsersService;
 
   const mockUsersService = {
     findAll: jest.fn(),
@@ -35,6 +34,8 @@ describe('UsersController', () => {
     email: 'test@example.com',
     password: 'hashedPassword',
     manager: null as unknown as Manager,
+    notifyByEmail: true,
+    notifyByPhone: true,
   };
 
   beforeEach(async () => {
@@ -57,7 +58,6 @@ describe('UsersController', () => {
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
-    usersService = module.get<UsersService>(UsersService);
   });
 
   afterEach(() => {
@@ -82,6 +82,8 @@ describe('UsersController', () => {
         {
           id: mockUser.id,
           email: mockUser.email,
+          notifyByEmail: mockUser.notifyByEmail,
+          notifyByPhone: mockUser.notifyByPhone,
         },
       ]);
       expect(mockUsersService.findAll).toHaveBeenCalled();
@@ -113,6 +115,8 @@ describe('UsersController', () => {
       expect(result).toEqual({
         id: mockUser.id,
         email: mockUser.email,
+        notifyByEmail: mockUser.notifyByEmail,
+        notifyByPhone: mockUser.notifyByPhone,
       });
       expect(mockUsersService.findOneByEmail).toHaveBeenCalledWith(email);
     });
@@ -131,6 +135,8 @@ describe('UsersController', () => {
       expect(result).toEqual({
         id: mockUser.id,
         email: mockUser.email,
+        notifyByEmail: mockUser.notifyByEmail,
+        notifyByPhone: mockUser.notifyByPhone,
       });
       expect(mockUsersService.findOneById).toHaveBeenCalledWith(id);
     });
@@ -142,6 +148,8 @@ describe('UsersController', () => {
       const createUserDto: CreateUserDto = {
         email: 'new@example.com',
         password: 'password123',
+        notifyByEmail: true,
+        notifyByPhone: true,
       };
       mockUsersService.create.mockResolvedValue(mockUser);
 
@@ -152,6 +160,8 @@ describe('UsersController', () => {
       expect(result).toEqual({
         id: mockUser.id,
         email: mockUser.email,
+        notifyByEmail: mockUser.notifyByEmail,
+        notifyByPhone: mockUser.notifyByPhone,
       });
       expect(mockUsersService.create).toHaveBeenCalledWith(createUserDto);
     });

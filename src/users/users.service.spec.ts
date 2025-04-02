@@ -105,6 +105,8 @@ describe('UsersService', () => {
       const createUserDto: CreateUser = {
         email: 'new@test.com',
         password: 'password123',
+        notifyByEmail: true,
+        notifyByPhone: false,
       };
       const mockCreatedUser = { id: 1, ...createUserDto };
       mockRepository.save.mockResolvedValue(mockCreatedUser);
