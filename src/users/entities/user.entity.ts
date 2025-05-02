@@ -5,7 +5,8 @@ import {
   PrimaryGeneratedColumn,
   OneToOne,
 } from 'typeorm';
-import { Manager } from '../../managers/entities/manager.entity';
+import { Contractor } from 'src/contractors/entities/contractor.entity';
+import { Manager } from 'src/managers/entities/manager.entity';
 
 @Entity()
 export class User {
@@ -22,12 +23,18 @@ export class User {
   @OneToOne(() => Manager, (manager) => manager.user)
   manager: Manager;
 
+  @OneToOne(() => Contractor, (contractor) => contractor.user)
+  contractor: Contractor;
+
+  @Column({ default: true })
+  canLogin?: boolean;
+
   @Column({ length: 20, nullable: true })
   phone?: string;
 
   @Column({ default: true })
-  notifyByEmail: boolean;
+  notifyByEmail?: boolean;
 
   @Column({ default: false })
-  notifyByPhone: boolean;
+  notifyByPhone?: boolean;
 }

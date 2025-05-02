@@ -18,13 +18,19 @@ export class CreateUserDto {
   @IsNotEmpty()
   password: string;
 
+  @IsBoolean()
+  @IsOptional()
+  canLogin?: boolean;
+
   @IsPhoneNumber()
   @IsOptional()
   phone?: string;
 
   @IsBoolean()
-  notifyByEmail: boolean;
+  @IsOptional()
+  notifyByEmail?: boolean;
 
   @IsBoolean()
-  notifyByPhone: boolean;
+  @IsOptional()
+  notifyByPhone?: boolean;
 }

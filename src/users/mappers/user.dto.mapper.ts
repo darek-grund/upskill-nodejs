@@ -7,8 +7,6 @@ export const mapToNewUser = (newUserDto: CreateUserDto): CreateUser => ({
   email: newUserDto.email,
   password: newUserDto.password,
   phone: newUserDto.phone,
-  notifyByEmail: newUserDto.notifyByEmail,
-  notifyByPhone: newUserDto.notifyByPhone,
 });
 
 export const mapToUserDto = (user: User): UserDto => ({

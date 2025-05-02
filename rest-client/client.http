@@ -13,7 +13,7 @@ content-type: application/json
 ###################################################################
 ###################################################################
 
-@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoidXNlckBkb21haW4uY29tIiwiaWF0IjoxNzQ0NDg3NzMzLCJleHAiOjE3NDQ0ODgwMzN9.i8gyCVTHQWFHOs2Aj90VSOApZWmA1HCUFjYXjc5JgQU
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoidXNlckBkb21haW4uY29tIiwiaWF0IjoxNzQ2MjA5NzI4LCJleHAiOjE3NDYyMTAwMjh9.VKHBcxdSop3sU6NIJgqAoL_7KqEfCzBs2Yu6DiOdHGU
 ### create user
 POST http://localhost:3000/users HTTP/1.1
 content-type: application/json
@@ -22,9 +22,7 @@ Authorization: Bearer {{access_token}}
 {
     "email": "user@domain.com",
     "password": "12345678",
-    "phone": "+48 123 123 123",
-    "notifyByEmail": true,
-    "notifyByPhone": true
+    "phone": "+48 123 123 123"
 }
 
 ### get all users
@@ -52,4 +50,53 @@ content-type: application/json
     "password": "12345678",
     "firstName": "John",
     "lastName": "Doe"
+}
+
+###################################################################
+###################################################################
+###################################################################
+
+### get all contractors
+GET http://localhost:3000/contractors
+
+### create contractor
+POST http://localhost:3000/contractors HTTP/1.1
+content-type: application/json
+
+{
+    "email": "company@contractor.com",
+    "password": "12345678",
+    "company": "WithInvoices"
+}
+
+### disable contractor
+
+PATCH http://localhost:3000/contractors/1/can-login
+Content-Type: application/json
+
+{
+    "canLogin": false
+}
+
+###################################################################
+###################################################################
+###################################################################
+
+### get all invoices
+GET http://localhost:3000/invoices
+
+### search invoice by number
+GET http://localhost:3000/invoices/search?number=FV/2024/001
+
+### find invoices from last month
+GET http://localhost:3000/invoices/last-month
+
+### create invoice
+POST http://localhost:3000/invoices
+Content-Type: application/json
+
+{
+    "number": "FV/2024/001",
+    "amount": 1000.12,
+    "contractorId": 11
 }
