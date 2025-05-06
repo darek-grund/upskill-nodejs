@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { AuthGuard } from '../auth/auth.guard';
 import { JwtService } from '@nestjs/jwt';
 import { Manager } from '../managers/entities/manager.entity';
+import { Contractor } from '../contractors/entities/contractor.entity';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -34,6 +35,7 @@ describe('UsersController', () => {
     email: 'test@example.com',
     password: 'hashedPassword',
     manager: null as unknown as Manager,
+    contractor: null as unknown as Contractor,
     notifyByEmail: true,
     notifyByPhone: true,
   };
@@ -163,7 +165,11 @@ describe('UsersController', () => {
         notifyByEmail: mockUser.notifyByEmail,
         notifyByPhone: mockUser.notifyByPhone,
       });
-      expect(mockUsersService.create).toHaveBeenCalledWith(createUserDto);
+      expect(mockUsersService.create).toHaveBeenCalledWith({
+        email: createUserDto.email,
+        password: createUserDto.password,
+        phone: undefined,
+      });
     });
   });
 });

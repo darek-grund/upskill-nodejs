@@ -3,8 +3,6 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { CreateUserDto } from '../src/users/dto/create-user.dto';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../src/users/entities/user.entity';
 import { UsersService } from '../src/users/users.service';
 
 describe('UsersController (e2e)', () => {
