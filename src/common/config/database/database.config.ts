@@ -7,11 +7,11 @@ import { Invoice } from 'src/invoices/entities/invoice.entity';
 
 export default {
   type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'root',
-  password: 'root',
-  database: 'upskill-nodejs',
+  host: process.env.DATABASE_HOST,
+  port: parseInt(process.env.DATABASE_PORT, 10),
+  username: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
   entities: [User, Manager, Notification, Contractor, Invoice],
   synchronize: true,
 } satisfies DataSourceOptions;
